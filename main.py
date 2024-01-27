@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import time
 
+
 def main():
     # Load environment variables from the .env file
     load_dotenv()
@@ -28,7 +29,7 @@ def main():
         # If the user question is provided
         if user_question is not None and user_question != "":
             # Set the number of retries for API calls
-            retry_count = 3  
+            retry_count = 3
 
             # Loop for retrying API calls in case of rate-limiting errors
             for attempt in range(retry_count):
@@ -36,12 +37,12 @@ def main():
                     with st.spinner(text="In progress..."):
                         # Make an API call to get a response
                         response = agent.run(user_question)
-                    
+
                     # Display the response
                     st.write(response)
-                    
+
                     # Break out of the loop if successful API call
-                    break  
+                    break
                 except Exception as e:
                     # Handle rate-limiting error
                     if "insufficient_quota" in str(e):
@@ -50,11 +51,12 @@ def main():
                     else:
                         # Display other errors and break out of the loop
                         st.error(f"Error: {e}")
-                        break  
+                        break
 
             else:
                 # Display an error message if retries are unsuccessful
                 st.error("Failed to get a response. Please try again later.")
+
 
 if __name__ == '__main__':
     # Run the main function if the script is executed
